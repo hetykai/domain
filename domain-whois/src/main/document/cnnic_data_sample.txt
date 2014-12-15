@@ -1,0 +1,20 @@
+----------------------------------------
+Domain Name: danzao.com.cn
+ROID: 20110312s10011s29090317-cn
+Domain Status: clientDeleteProhibited
+Domain Status: clientTransferProhibited
+Registrant ID: ename_w8bnrau4su
+Registrant: 林鸿周
+Registrant Contact Email: woxinshangbei@gmail.com
+Sponsoring Registrar: 厦门易名科技有限公司（原厦门易名网络科技有限公司）
+Name Server: ns1.ename.net
+Name Server: ns2.ename.net
+Name Server: ns3.ename.net
+Name Server: ns4.ename.net
+Name Server: ns5.ename.net
+Name Server: ns6.ename.net
+Registration Date: 2011-03-12 21:22:41
+Expiration Date: 2015-03-12 21:22:41
+DNSSEC: unsigned
+
+----------------------------------------
