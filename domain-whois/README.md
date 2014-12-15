@@ -15,8 +15,11 @@
 </dependency>
 ```
 
-# 非Maven构建
+## 非Maven构建
+
 直接下载release/domain-whois-0.0.1.jar，加入到您自己的项目依赖路径里去。
+
+
 -----
 # 使用
 这个Jar工具包的作用就是提供域名查询的API。
