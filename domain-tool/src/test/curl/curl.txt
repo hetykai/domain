@@ -1,0 +1,15 @@
+curl -l -H "Content-type: application/json" -X POST -d '[{"sid":1,"domainname":"boluogan.com"},{"sid":2,"domainname":"pingguogan.com"}]' http://localhost:18080/bulkquery
+
+curl -l -H "Content-type: application/json" -X POST -d '[{"sid":1,domainname:"boluogan.com"}]' http://localhost:18080/bulkquery
+
+curl -l -H "Content-type: application/json" -X POST -d '[{"sid":"1"}]' http://localhost:18080/bulkquery
+
+curl -l -H "Content-type: application/json" -X POST -d '[]' http://localhost:18080/bulkquery
+
+curl -l -H "Content-type: text/plain" -X POST -d '[{“name”:”以daikuan为开头的三拼COM查询”, “data”:[{"sid":1,"domainname":"abc.hk","registerStatus":"已注册","createDate":"2010-09-03 00:00:00","expirationDate":"2015-09-03 00:00:00","registrant":null,"registrantEmail":"domain@mail.im","registrar":"Hong Kong Domain Name Registration Company Limited"}]}]'  http://localhost:18080/savequeries
+
+
+curl -l -H "Content-type: application/json" -X POST -d '{"name":"以daikuan为开头的三拼COM查询", "data":[{"sid":1,"domainname":"abc.hk","registerStatus":"已注册","createDate":"2010-09-03 00:00:00","expirationDate":"2015-09-03 00:00:00","registrant":null,"registrantEmail":"domain@mail.im","registrar":"Hong Kong Domain Name Registration Company Limited"}]}'  http://localhost:18080/savequeries
+
+
+"{\“name\”:\”以daikuan为开头的三拼COM查询\” }"
