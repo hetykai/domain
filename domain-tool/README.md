@@ -19,35 +19,5 @@ Maven工程，fork下来后可以导入IDE,也可以直接运行Maven命令打�
 
 
 # REST API
-##全部根后缀
->地址：tlds/root/all<br>
->类型：GET
+详见document/domain-tool REST API说明文档.pdf
 
-##可以解析结果的根后缀
->地址：tlds/root/parseable<br>
->类型：GET<br>
-
-
-##单个域名查询
->地址：whois/${domainname}<br>
->类型：GET<br>
-
-##批量查询
->地址：bulkquery<br>
->类型：post<br>
->参数：{["sid":1,"domainname":boluogan.com],["sid":2,"domainname":"pingguogan.com"]}<br>
->返回：{"status":"success","message":"正在查询中...."}<br>
->查询结果用socket推送:<br>
->{["sid":1,"domainname":"boluogan.com","registerStatus":"已注册","createDate":"2014-12-12 18:08:30","expirationDate":"2015-12-12 18:08:30","registrant":"boluogan.com","registrantEmail":"domain@boluogan.com","registrar":"Godaddy"],[.......]}<br>
-
-
-##保存查询结果
->地址：saveresult<br>
->类型：post<br>
->参数：{["sid":1,"domainname":"boluogan.com","registerStatus":"已注册","createDate":"2014-12-12 18:08:30","expirationDate":"2015-12-12 18:08:30","registrant":"boluogan.com","registrantEmail":"domain@boluogan.com","registrar":"Godaddy"],[.......]}<br>
->返回：{"status":"success","message":"保存成功"}
-
-##历史查询记录
->地址：queries<br>
->类型：GET<br>
->返回：{["name":"三拼域名查询 2014-12-17","url":"/datas/201412/20141217203508.json"],[....]}<br>
