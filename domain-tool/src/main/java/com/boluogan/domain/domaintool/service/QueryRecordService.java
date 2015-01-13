@@ -75,10 +75,7 @@ public class QueryRecordService {
         for (File file:files){
             if(file.isFile()&&file.getName().indexOf(".json")>=0){
                 try {
-                    //Object object = objectMapper.readValue(file,Object.class);
-                    //Map<?,?> tempMap = (Map<?,?>) object;
-                    //JsonNode root =objectMapper.readTree(file);
-                    //Map<?,?> tempMap= objectMapper.readValue(file,Map.class);
+
                     Map<String,?> map = objectMapper.readValue(file,Map.class);
 
                     String name =(String)map.get("name");
@@ -105,9 +102,9 @@ public class QueryRecordService {
             System.out.println("datasDirectory.path:" + datasDirectory.getAbsolutePath());
             String filename=String.format("%s.json", MyDateHelper.dateToString(new Date(), "yyyyMMddHHmmssSSS"));
             System.out.println("filename:"+filename);
-            ObjectMapper objectMapper = new ObjectMapper();
             File file = new File(datasDirectory,filename);
-            objectMapper.writeValue(file,datas);
+
+            FileUtils.writeStringToFile(file,datas);
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseStatus.FAILED.toResponseData();
