@@ -1,5 +1,6 @@
 package com.boluogan.domain.whois;
 
+import com.boluogan.domain.whois.utils.DomainWhoisInfoBuilder;
 import org.junit.Test;
 
 /**
@@ -8,13 +9,13 @@ import org.junit.Test;
 public class DomainWhoisInfoTest {
     @Test
     public void factory() throws Exception {
-        DomainWhoisInfo domainWhoisInfo= DomainWhoisInfo.factory("yuepian.com");
+        DomainWhoisInfo domainWhoisInfo= DomainWhoisInfoBuilder.build("yuepian.com");
         System.out.println(domainWhoisInfo);
 
-        domainWhoisInfo= DomainWhoisInfo.factory("yuepian.com.cn");
+        domainWhoisInfo= DomainWhoisInfoBuilder.build("yuepian.com.cn");
         System.out.println(domainWhoisInfo);
 
-        domainWhoisInfo= DomainWhoisInfo.factory("yuepian");
+        domainWhoisInfo= DomainWhoisInfoBuilder.build("yuepian");
         System.out.println(domainWhoisInfo);
     }
 }

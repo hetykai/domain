@@ -2,6 +2,8 @@ package com.boluogan.domain.whois.parser;
 
 import com.boluogan.domain.whois.exception.UnSupportedWhoisInfoParserException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,7 +57,8 @@ final public class   WhoisParserSlector {
      * 根据后缀名拼出对应解析器的类名，生成实例放入map
      * @param rootTlds
      */
-    public static synchronized void initWhoisParsers(Set<String> rootTlds){
+    public static synchronized List<String> initWhoisParsers(Set<String> rootTlds){
+        List<String> list = new ArrayList<String>();
         if(!init){
             init=true;
             for(String tld:rootTlds){
@@ -67,6 +70,7 @@ final public class   WhoisParserSlector {
                     Class<?> cls =Class.forName(clsname);
                     WhoisParser whoisParser =(WhoisParser) cls.newInstance();
                     map.put(tld.toUpperCase(),whoisParser);
+                    list.add(tld.toLowerCase());
                 }  catch (ClassCastException e){
                     e.printStackTrace();
                 }catch (Exception e) {
@@ -75,6 +79,8 @@ final public class   WhoisParserSlector {
 
             }
         }
+
+        return list;
     }
 
 

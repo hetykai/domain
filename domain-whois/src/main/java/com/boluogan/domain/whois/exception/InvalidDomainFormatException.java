@@ -7,10 +7,11 @@ public class InvalidDomainFormatException extends Exception {
     private String domainname;
 
     public InvalidDomainFormatException(String domainname){
+        super("[异常]错误的域名格式:"+domainname);
         this.domainname=domainname;
     }
 
-    public String toString(){
+    /*public String toString(){
         return "[异常]错误的域名格式:"+domainname;
-    }
+    }*/
 }

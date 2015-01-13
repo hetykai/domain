@@ -1,7 +1,5 @@
 package com.boluogan.domain.whois;
 
-import com.boluogan.domain.whois.exception.InvalidDomainFormatException;
-
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +8,7 @@ import java.util.List;
  * Created by boluogan.com on 12/9/14.
  */
 public class DomainWhoisInfo {
+    private int sid=1;
     /**
      * 域名前缀
      */
@@ -39,6 +38,14 @@ public class DomainWhoisInfo {
     private String registrantEmail;
     private Date creationDate;
     private Date expirationDate;
+
+    public int getSid() {
+        return sid;
+    }
+
+    public void setSid(int sid) {
+        this.sid = sid;
+    }
 
     public String getKeyword() {
         return keyword;
@@ -166,23 +173,4 @@ public class DomainWhoisInfo {
         return str;
     }
 
-    public static DomainWhoisInfo factory(String domainname) throws Exception {
-        DomainWhoisInfo domainWhoisInfo= new DomainWhoisInfo();
-        int index = domainname.indexOf(".");
-        int lastIndex = domainname.lastIndexOf(".");
-        if(lastIndex>=index && index>0){
-            String keyword = domainname.substring(0,index);
-            String fulltld = domainname.substring(index+1);
-            String roottld = domainname.substring(lastIndex+1);
-
-            domainWhoisInfo.setKeyword(keyword);
-            domainWhoisInfo.setFulltld(fulltld);
-            domainWhoisInfo.setRoottld(roottld);
-            domainWhoisInfo.setDomainname(domainname);
-        }else{
-            throw new InvalidDomainFormatException(domainname);
-        }
-
-        return domainWhoisInfo;
-    }
 }

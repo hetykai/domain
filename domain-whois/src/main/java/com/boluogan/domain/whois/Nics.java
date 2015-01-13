@@ -16,6 +16,7 @@ public class Nics {
     private static Map<String, WhoisServer> serverMap;
     private static Set<String> rootTlds;
     private static Set<String> allTlds;
+    private static Set<String> parseableRootTlds;
 
     static {
 
@@ -23,18 +24,27 @@ public class Nics {
     }
 
     private static void init(){
-        gtlds = new HashSet(ConfigFileReader.read(ConfigFile.GTLDS));
-        rootCctlds = new HashSet(ConfigFileReader.read(ConfigFile.CCTLDS));
-        allCctlds = new HashSet(ConfigFileReader.read(ConfigFile.ALLCCTLDS));
-        serverMap = ConfigFileReader.loadWhoisServer();
-        rootTlds = serverMap.keySet();
-        WhoisParserSlector.initWhoisParsers(rootTlds);
+        try {
+            gtlds = new HashSet(ConfigFileReader.read(ConfigFile.GTLDS));
+            rootCctlds = new HashSet(ConfigFileReader.read(ConfigFile.CCTLDS));
+            allCctlds = new HashSet(ConfigFileReader.read(ConfigFile.ALLCCTLDS));
+            serverMap = ConfigFileReader.loadWhoisServer();
+            rootTlds = serverMap.keySet();
+            List<String> parseableRootTldsList= WhoisParserSlector.initWhoisParsers(rootTlds);
+            parseableRootTlds = new HashSet<String>(parseableRootTldsList);
 
-        List<String> list = new ArrayList<String>(gtlds);
-        list.addAll(new ArrayList<String>(allCctlds));
-        allTlds = new HashSet<String>(list);
+            List<String> list = new ArrayList<String>(gtlds);
+            list.addAll(new ArrayList<String>(allCctlds));
+            allTlds = new HashSet<String>(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * whois server
+     * @return
+     */
     public static List<WhoisServer> servers() {
         List<WhoisServer> list = new ArrayList<WhoisServer>();
         for (String key : serverMap.keySet()) {
@@ -42,6 +52,10 @@ public class Nics {
         }
         return list;
 
+    }
+
+    public static List<String> parseableRootTlds(){
+        return new ArrayList<String>(parseableRootTlds);
     }
 
     /**

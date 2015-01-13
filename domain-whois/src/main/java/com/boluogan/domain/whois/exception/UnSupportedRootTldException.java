@@ -7,10 +7,11 @@ public class UnSupportedRootTldException extends Exception {
     private String rootTld;
 
     public UnSupportedRootTldException(String rootTld) {
+        super("[异常]不支持查询的根后缀:"+rootTld);
         this.rootTld = rootTld;
     }
 
-    public String toString(){
+    /*public String toString(){
         return "[异常]不支持查询的根后缀:"+rootTld;
-    }
+    }*/
 }

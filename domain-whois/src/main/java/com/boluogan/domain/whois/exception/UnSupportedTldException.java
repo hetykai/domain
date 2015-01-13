@@ -7,10 +7,11 @@ public class UnSupportedTldException extends Exception {
     private String domainname;
 
     public UnSupportedTldException(String domainname){
+        super("[异常]不支持查询的域名后缀:"+domainname);
         this.domainname=domainname;
     }
 
-    public String toString(){
+    /*public String toString(){
         return "[异常]不支持查询的域名后缀:"+domainname;
-    }
+    }*/
 }

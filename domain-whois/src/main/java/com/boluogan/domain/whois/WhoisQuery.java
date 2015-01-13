@@ -2,6 +2,7 @@ package com.boluogan.domain.whois;
 
 import com.boluogan.domain.whois.parser.WhoisParser;
 import com.boluogan.domain.whois.parser.WhoisParserSlector;
+import com.boluogan.domain.whois.utils.DomainWhoisInfoBuilder;
 
 import java.io.IOException;
 
@@ -18,7 +19,7 @@ public class WhoisQuery {
      * @throws Exception
      */
     public static DomainWhoisInfo parsedWhoisInfo(String domainname)throws Exception{
-        DomainWhoisInfo domainWhoisInfo = DomainWhoisInfo.factory(domainname);
+        DomainWhoisInfo domainWhoisInfo = DomainWhoisInfoBuilder.build(domainname);
         String rootTld = domainWhoisInfo.getRoottld();
         WhoisServer whoisServer = Nics.selectServer(rootTld);
         WhoisParser whoisParser = WhoisParserSlector.selectParser(rootTld);
@@ -41,7 +42,7 @@ public class WhoisQuery {
      * @throws Exception
      */
     public static String originalWhoisInfo(String domainname)throws Exception{
-        DomainWhoisInfo domainWhoisInfo = DomainWhoisInfo.factory(domainname);
+        DomainWhoisInfo domainWhoisInfo = DomainWhoisInfoBuilder.build(domainname);
         WhoisServer whoisServer = Nics.selectServer(domainWhoisInfo.getRoottld());
         String content = whoisServer.query(domainname);
         //System.out.println(content);
