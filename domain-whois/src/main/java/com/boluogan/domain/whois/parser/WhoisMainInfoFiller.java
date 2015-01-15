@@ -4,15 +4,14 @@ import com.boluogan.domain.whois.DomainRegisterStatus;
 import com.boluogan.domain.whois.DomainWhoisInfo;
 import com.boluogan.domain.whois.utils.WhoisStringUtil;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by boluogan.com on 12/13/14.
  */
 public class WhoisMainInfoFiller {
+    //private Locale locale=Locale.getDefault(Locale.Category.FORMAT);
+    private Locale locale=Locale.US;
     private DomainWhoisInfo domainWhoisInfo;
     private Map<String,List<String>> map;
 
@@ -61,12 +60,14 @@ public class WhoisMainInfoFiller {
     public Date getDateByKey(String key,String dateFormate){
         String source = getStringBykey(key) ;
         if(source!=null){
-            Date date = WhoisStringUtil.str2Date(source,dateFormate);
+            Date date = WhoisStringUtil.str2Date(source,dateFormate,locale);
             return date;
         }
 
         return null;
     }
+
+
 
 
     public void registrar(String tag){
@@ -102,5 +103,7 @@ public class WhoisMainInfoFiller {
         domainWhoisInfo.setStatusList(getListByKey(tag));
     }
 
-
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
 }

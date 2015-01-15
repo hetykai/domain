@@ -17,12 +17,19 @@ public class WhoisStringUtil {
      */
     public static Date str2Date(String source, String formate) {
 
+       return str2Date(source,formate,Locale.getDefault(Locale.Category.FORMAT));
+
+    }
+
+    public static Date str2Date(String source, String formate,Locale locale) {
+
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formate);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formate,locale);
             Date date = simpleDateFormat.parse(source);
             //System.out.printf("\n[%s,%s] %s\n",source,formate,simpleDateFormat.format(date));
             return date;
         } catch (ParseException e) {
+            System.out.println("exception-->source:"+source+",formate:"+formate);
             e.printStackTrace();
             return null;
         }
