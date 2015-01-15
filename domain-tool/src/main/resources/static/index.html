@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-table.css">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="js/lib/jquery-2.1.1.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="js/lib/bootstrap.js"></script>
+    <script src="js/lib/bootstrap-table.js"></script>
+    <script src="js/lib/sockjs-0.3.4.js"></script>
+    <script src="js/lib/stomp.js"></script>
+    <script src="js/mainJs.js"></script>
+</head>
+<body>
+<header class="col-sm-offset-1 col-sm-10">
+    <div class="row banner">
+        <div class="col-sm-2"><h1>域名查询</h1></div>
+        <div class="col-sm-10"></div>
+    </div>
+    <div>
+        <button id="bt_filter" type="button" class="btn btn-primary">域名查询</button>
+        <button id="bt_save" type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveDialog">保存结果</button>
+        <button id="bt_history" type="button" class="btn btn-primary">查看历史</button>
+    </div>
+</header>
+<section>
+    <div class="filterPanel col-sm-offset-1 col-sm-10" style="display: none">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <div class="col-sm-1 control-label">
+                    <label>位数：</label>
+                </div>
+                <div class="col-sm-11">
+                    <label class="checkbox-inline"><input type="radio" name="count" value="1">1</label>
+                    <label class="checkbox-inline"><input type="radio" name="count" value="2">2</label>
+                    <label class="checkbox-inline"><input type="radio" name="count" value="3">3</label>
+                    <label class="checkbox-inline"><input type="radio" name="count" value="4">4</label>
+                    <label class="checkbox-inline"><input type="radio" name="count" value="5">5</label>
+                    <label class="checkbox-inline"><input type="radio" name="count" value="6">6</label>
+                    <label class="checkbox-inline"><input type="radio" name="count" value="7">7</label>
+                    <label class="checkbox-inline"><input type="radio" name="count" value="8">8</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1 control-label">
+                    <label>类型：</label>
+                </div>
+                <div class="col-sm-11">
+                    <label class="checkbox-inline"><input type="radio" name="type" checked value="1">拼音</label>
+                    <label class="checkbox-inline"><input type="radio" name="type" value="2">数字</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 control-label">
+                    <label>每个位置*或空表示任意字符,多个音节用逗号","隔开，例如：tang,le</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1 control-label">
+                    <label>位置：</label>
+                </div>
+                <div class="col-sm-11 placeContainer">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1 control-label">
+                    <label>后缀：</label>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="suffixname" placeholder="请选择后缀或自定义">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default
+                         dropdown-toggle" data-toggle="dropdown">
+                                后缀
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a onclick="{$('#suffixname').val('.com')}">.com</a></li>
+                                <li><a onclick="{$('#suffixname').val('.net')}">.net</a></li>
+                                <li><a onclick="{$('#suffixname').val('.org')}">.org</a></li>
+                                <li><a onclick="{$('#suffixname').val('.cn')}">.cn</a></li>
+                                <li><a onclick="{$('#suffixname').val('.com.cn')}">.com.cn</a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <button id="bt_create" type="button" class="btn btn-primary">生成域名</button>
+                    <button id="bt_query" type="button" class="btn btn-primary">查询信息</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<section>
+    <div class="col-sm-offset-1 col-sm-10">
+        <table data-toggle="table" data-cache="false" data-height=auto
+                data-pagination="true" data-page-list="[10, 20, 50, 100, 200]"
+                data-row-style="rowStyle" data-page-size="20" data-search="true">
+            <thead>
+            <tr>
+                <th data-field="sid" class="col-md-1">编号</th>
+                <th data-field="domainname" class="col-md-2">域名</th>
+                <th data-field="registerStatus" class="col-md-1">注册状态</th>
+                <th data-field="createDate" class="col-md-1">注册日期</th>
+                <th data-field="expirationDate" class="col-md-1">过期日期</th>
+                <th data-field="registrant" class="col-md-2">所有者</th>
+                <th data-field="registrantEmail" class="col-md-2">联系Email</th>
+                <th data-field="registrar" class="col-md-1">注册商</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</section>
+<div class="modal fade" id="saveDialog" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title">
+                    请输入保存内容名称
+                </h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" id="storeName"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="bt_storeQuery">
+                    保存
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="hisDialog" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title">
+                    历史查询结果
+                </h4>
+            </div>
+            <div class="modal-body">
+                <ul id="hisList" class="list-group"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</body>
+<script>
+</script>
+</html>
