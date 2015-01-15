@@ -6,6 +6,7 @@ import com.boluogan.domain.domaintool.model.WhoisRecord;
 import com.boluogan.domain.domaintool.utils.WhoisRecordBuilder;
 import com.boluogan.domain.whois.DomainWhoisInfo;
 import com.boluogan.domain.whois.WhoisQuery;
+import com.boluogan.util.date.MyDateHelper;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +27,10 @@ public class WhoisController {
         System.out.println("domainname:"+domainname);
         try {
             DomainWhoisInfo domainWhoisInfo = WhoisQuery.parsedWhoisInfo(domainname);
+
             WhoisRecord whoisRecord= WhoisRecordBuilder.build(domainWhoisInfo);
+            System.out.println(domainWhoisInfo.getCreationDate());
+            System.out.println(MyDateHelper.dateToString(domainWhoisInfo.getCreationDate()));
             return new ResponseData<WhoisRecord>(ResponseStatus.SUCCESS,whoisRecord);
         } catch (Exception e) {
             return new ResponseData<String>(ResponseStatus.FAILED,e.getMessage());

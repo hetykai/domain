@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.Map;
  */
 @Service
 public class QueryRecordService {
+    private static final Charset UTF8 = Charset.forName("UTF-8");
     private  ObjectMapper objectMapper = new ObjectMapper();
 
     /*{
@@ -104,7 +106,7 @@ public class QueryRecordService {
             System.out.println("filename:"+filename);
             File file = new File(datasDirectory,filename);
 
-            FileUtils.writeStringToFile(file,datas);
+            FileUtils.writeStringToFile(file,datas,UTF8);
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseStatus.FAILED.toResponseData();
@@ -117,7 +119,7 @@ public class QueryRecordService {
         try {
             System.out.println("datasDirectory.getAbsolutePath():"+datasDirectory.getAbsolutePath());
             File file = new File(datasDirectory,filename+".json");
-            return FileUtils.readFileToString(file);
+            return FileUtils.readFileToString(file,UTF8);
         } catch (IOException e) {
             e.printStackTrace();
         }
