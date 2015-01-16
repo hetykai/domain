@@ -1,11 +1,16 @@
 package com.boluogan.domain.domaintool.utils;
 
+import com.boluogan.domain.domaintool.service.QueryRecordService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 
 /**
  * Created by boluogan.com on 1/12/15.
  */
 public class MyIOUtils {
+    private static Logger logger = LoggerFactory.getLogger(MyIOUtils.class);
     private static final  File rootDirectory=createRootDirectory();
     private static final String DATAS_DIRECTORY_NAME="datas";
 
@@ -24,7 +29,7 @@ public class MyIOUtils {
                 dirpath=dirpath.substring(5 ,end);
 
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("createRootDirectory:",e);
             }
 
         }
@@ -48,7 +53,7 @@ public class MyIOUtils {
             return mydir;
         } catch (Exception e) {
 
-            e.printStackTrace();
+            logger.error("createDatasDirectory:",e);
         }
         return mydir;
     }

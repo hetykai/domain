@@ -1,5 +1,6 @@
 package com.boluogan.domain.domaintool.service;
 
+
 import com.boluogan.domain.domaintool.constant.ResponseStatus;
 import com.boluogan.domain.domaintool.model.QueryRecordFile;
 import com.boluogan.domain.domaintool.model.ResponseData;
@@ -8,6 +9,8 @@ import com.boluogan.util.date.MyDateHelper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -18,11 +21,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * Created by boluogan.com on 1/10/15.
  */
 @Service
 public class QueryRecordService {
+    private Logger logger = LoggerFactory.getLogger(QueryRecordService.class);
     private static final Charset UTF8 = Charset.forName("UTF-8");
     private  ObjectMapper objectMapper = new ObjectMapper();
 
@@ -44,9 +49,9 @@ public class QueryRecordService {
                 dirpath = classpath.split("!")[0];
                 int end = dirpath.lastIndexOf("/");
                 dirpath=dirpath.substring(5 ,end);
-                System.out.println("dirpath:"+dirpath);
+                logger.info("dirpath:"+dirpath);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("read classpath directory exception:",e);
             }
 
         }
@@ -59,8 +64,8 @@ public class QueryRecordService {
             }
             return mydir;
         } catch (Exception e) {
-            System.out.println("exception-->dirpath:"+dirpath);
-            e.printStackTrace();
+            logger.error("exception-->dirpath:"+dirpath,e);
+            //e.printStackTrace();
         }
 
         return new File(System.getProperty("user.datasDirectory"));
@@ -71,7 +76,7 @@ public class QueryRecordService {
 
     public List<QueryRecordFile> queries(){
         List<QueryRecordFile> list = new ArrayList<QueryRecordFile>();
-        System.out.println("datasDirectory.path:" + datasDirectory.getAbsolutePath());
+        logger.info("datasDirectory.path:" + datasDirectory.getAbsolutePath());
         File[] files = datasDirectory.listFiles();
 
         for (File file:files){
@@ -89,7 +94,7 @@ public class QueryRecordService {
                     list.add(queryRecordFile);
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("queries()",e);
                 }
             }
         }
@@ -108,7 +113,7 @@ public class QueryRecordService {
 
             FileUtils.writeStringToFile(file,datas,UTF8);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("savequeries()",e);
             return ResponseStatus.FAILED.toResponseData();
         }
 
@@ -121,7 +126,7 @@ public class QueryRecordService {
             File file = new File(datasDirectory,filename+".json");
             return FileUtils.readFileToString(file,UTF8);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("readQueryRecord(),filename:"+filename,e);
         }
 
         return "404-File Not Found.";

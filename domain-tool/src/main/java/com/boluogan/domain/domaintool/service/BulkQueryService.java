@@ -6,6 +6,8 @@ import com.boluogan.domain.domaintool.model.WhoisRecord;
 import com.boluogan.domain.domaintool.utils.WhoisRecordBuilder;
 import com.boluogan.domain.whois.DomainWhoisInfo;
 import com.boluogan.domain.whois.WhoisQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.concurrent.Executors;
  */
 @Service
 public class BulkQueryService {
+    private Logger logger = LoggerFactory.getLogger(BulkQueryService.class);
     private SimpMessagingTemplate template;
     private ExecutorService executorService= Executors.newSingleThreadExecutor();
     @Autowired
@@ -46,12 +49,13 @@ public class BulkQueryService {
                                 Thread.sleep(50l);
 
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("bulkQuery in for:",e);
                             }
 
                         }
                     } catch (Exception e) {
-                        System.out.println(e.getMessage()+":\n"+whoisRecordList.get(0));
+                        logger.error("bulkQuery out of for:",e);
+                        //System.out.println(e.getMessage()+":\n"+whoisRecordList.get(0));
                     }
 
                     template.convertAndSend("/topic/bulkquery",new ResponseData<String>(ResponseStatus.DONE,"批量查询结束."));
@@ -60,7 +64,7 @@ public class BulkQueryService {
 
             executorService.execute(runnable);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("bulkQuery outter:",e);
         }
 
 
