@@ -2,20 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
+     <parent>
         <artifactId>domain</artifactId>
         <groupId>com.boluogan.domain</groupId>
         <version>0.0.1</version>
     </parent>
+    <!--<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.0.RELEASE</version>
+    </parent>-->
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>domain-tool</artifactId>
+    <!--<packaging>jar</packaging>-->
     <properties>
         <junit.version>4.11</junit.version>
         <java.version>1.6</java.version>
         <org.springframework.boot.version>1.2.0.RELEASE</org.springframework.boot.version>
         <release-directory>${project.build.directory}/release</release-directory>
+        <!--<start-class>com.boluogan.domain.domaintool.Application</start-class>-->
     </properties>
+
 
     <dependencyManagement>
         <dependencies>
@@ -30,7 +38,20 @@
         </dependencies>
     </dependencyManagement>
 
+
+
     <dependencies>
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -93,6 +114,19 @@
             </resource>
 
         </resources>-->
+        <!--<plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -105,8 +139,32 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>http://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>http://repo.spring.io/libs-release</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 
 </project>
